@@ -1,0 +1,95 @@
+<div *ngIf='korisnik'>
+<h2 style="color:darkblue">Profil</h2>
+    <div style="font-style:italic"> &nbsp; &nbsp; &nbsp; &nbsp;Slika profila</div>
+    <img class="slicc" [src]="korisnik.slika">
+    <br/>
+    Ime: {{korisnik.ime}}
+    <br/>
+    Prezime: {{korisnik.prezime}}
+    <br/>
+    Datum rodjenja: {{korisnik.datum}}
+    <br/>
+    Grad i drzava: {{korisnik.grad}} - {{korisnik.drzava}}
+    <br/>
+    E-mail: {{korisnik.mejl}}
+    <br/>
+    Tip: {{korisnik.tip}} korisnik
+</div>
+
+<hr/>
+<h2 style="color: darkblue;"> Procitane knjige </h2>
+
+<!-- ************ PREGLED KNJIGA **************************-->
+
+<div *ngIf='procitaneKnjige.length>0'>
+    <div style="display: block; width:30%;">
+        <canvas baseChart
+                [data]="pieChartData"
+                [labels]="pieChartLabels"
+                [colors]="mojeBoje"
+                chartType='pie'></canvas>
+      </div>
+    
+    
+    <div *ngFor='let k of procitaneKnjige'>
+        <a style="font-size: 16px;" routerLink='/knjiga/{{k.nazivK}}'>{{k.nazivK}} |  </a>
+    </div>
+</div>
+
+<div *ngIf='procitaneKnjige.length ==0'>
+    {{korIme}} nije procitao/la ni jednu knjigu jos uvek!
+</div>
+
+<hr/>
+
+<h2 style="color: darkblue;">Trenutno cita:</h2>
+
+<div *ngIf='trenutnoCita.length>0'>
+    <div *ngFor='let k of trenutnoCita'>
+        <a style="font-size: 16px;" routerLink='/knjiga/{{k.nazivK}}'>{{k.nazivK}} |  </a>
+    </div>
+</div>
+
+<div *ngIf='trenutnoCita.length==0'>
+    {{korIme}} trenutno ne cita ni jednu knjigu!
+</div>
+
+
+<!-- ***************************************************** PREGLED KOMENTARA */*/*/*/**/*/*/**/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/-->
+
+<div *ngIf='komentariKorisnika.length>0'>
+    <hr/>
+    <h2 style="color: darkblue;">Komentari korisnika</h2>
+    <table>
+        <tr>
+            <th>
+                Knjiga
+            </th>
+            <th>
+                Autori
+            </th>
+            <th>
+                Ocena
+            </th>
+            <th>
+                Komentar
+            </th>
+        </tr>
+        <tr *ngFor='let k of komentariKorisnika'>
+            <td>
+                <a style="font-size: 16px;" routerLink='/knjiga/{{k.nazivK}}'> {{k.nazivK}}</a>
+            </td>
+            <td>
+                {{k.autoriK}}
+            </td>
+            <td>
+                {{k.ocena}}
+            </td>
+            <td>
+                {{k.komentar}}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div *ngIf='komentariKorisnika.length==0'>Korisnik jos uvek nije ostavljao komentare!</div>

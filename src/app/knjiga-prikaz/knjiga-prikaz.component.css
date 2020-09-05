@@ -1,0 +1,14 @@
+img{
+    height: 200px;
+}
+
+.lep {
+    background-color: rgb(20, 122, 20);
+    padding: 20px 30px;
+    display: inline-block;
+    color: gainsboro;
+    font-size: 14px;
+    cursor: grab;
+  }
+
+ 

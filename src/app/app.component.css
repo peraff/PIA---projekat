@@ -1,0 +1,16 @@
+.foot{
+    color: rgb(48, 46, 46);
+}
+html {
+    scroll-behavior: smooth;
+}
+
+.razmak{
+    position: absolute;
+    top: 0px;
+    right: 10px;
+}
+.okolo{
+    position: relative;
+}
+

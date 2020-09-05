@@ -1,0 +1,50 @@
+<h2 style="color: darkblue;">Pretraga knjiga:</h2>
+Naziv: 
+<input type="text" name="nazivv" [(ngModel)]="naziv">
+<br/>
+Autori:
+<input type="text" name="autori" [(ngModel)]="autori">
+<br/>
+Zanr:
+<br/>
+<select multiple [(ngModel)]="zanr" name="zanrovi">
+    <option *ngFor="let z of zanrovi"> {{z}}</option>
+</select>
+<br/>
+<button (click)='pretraga()'>Pretrazi!</button>
+
+ <div *ngIf='knjige.length>0'>
+    <h2 style="color: darkblue;">Rezultati pretrage:</h2>
+    <table>
+        <tr>
+        <th>
+            Naziv
+        </th>
+        <th>
+            Autori 
+        </th>
+        <th>
+           Zanr
+        </th>
+        </tr>
+    
+        <tr *ngFor='let k of knjige' [class.neodobrena]='!k.odobrena'>
+            <td>
+                <a routerLink='/knjiga/{{k.nazivK}}' [class.neodobrenLink]='!k.odobrena'>
+                    {{k.nazivK}}
+                </a>
+            </td>
+            <td>
+                {{k.autoriK}}
+            </td>
+            <td>
+                {{k.zanroviK}}
+            </td>
+        </tr>
+    </table>
+
+ </div>
+
+ <div *ngIf='knjige.length==0 && pretrazeno'>
+    Trazena knjiga ne postoji u sistemu!
+</div>

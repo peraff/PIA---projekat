@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h2>Registracija</h2>
+  <hr/>
+  <span class="poruka">
+    {{poruka}}
+  </span>
+
+  <form>
+    Ime:  
+    <input type="text" name="ime" [(ngModel)]='ime' >
+    <br/>
+    Prezime:  
+    <input type="text" name="prezime" [(ngModel)]='prezime' >
+    <br/>
+
+    Korisnicko ime:
+    <input type="text" name="korime" [(ngModel)]='korIme'>
+    <br/>
+    Lozinka:
+    <input type="password" name="sifra" [(ngModel)]='lozinka'>  &nbsp;  &nbsp;  &nbsp;  &nbsp;
+    Potvrda lozinke:
+    <input type="password" name="sifra1" [(ngModel)]='potvrda'>
+    <br/>
+    Datum rodjenja:
+    <input type="date" name="datum" [(ngModel)]='datum'>
+    <br/>
+    Drzava:
+    <input type="string" name="drzava" [(ngModel)]='drzava'>
+    <br/>
+    Grad:
+    <input type="string" name="grad" [(ngModel)]='grad'>
+    <br/>
+    E-mail:
+    <input type="email" name='mejl' [(ngModel)]='mejl'>
+    <br/>
+    Slika profila:
+    <input type="file" (change)='dodajSliku($event)'>
+    <br/>
+    
+<input type="submit" name="dugme" value="Registruj se" (click)='registracija()'>
+</form>
+
+</body>
+</html>

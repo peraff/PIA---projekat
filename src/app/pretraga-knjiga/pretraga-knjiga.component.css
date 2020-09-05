@@ -1,0 +1,9 @@
+.neodobrena{
+    color: gray;
+    pointer-events: none;
+  }
+  
+  .neodobrenLink{
+    color:gray;
+    text-decoration:none;
+  }

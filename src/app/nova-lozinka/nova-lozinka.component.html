@@ -1,0 +1,12 @@
+<h2>Unesite novu lozinku</h2>
+Nova lozinka: 
+<input type="password" name="sifra" [(ngModel)]='lozinka'>
+<br/>
+Povrda lozinke:
+<input type="password" name="sifra2" [(ngModel)]='potvrda'>
+<br/>
+<input type="button" name="Posalji!" value="Posalji!" (click)='posalji()'>
+
+<div>
+    {{poruka}}
+</div>

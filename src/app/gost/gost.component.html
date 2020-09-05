@@ -1,0 +1,36 @@
+<h3>Gosti su uvek dobrodosli! Preporucujemo Vam da se 
+<a style="color: darkblue" routerLink= '/registracija'>
+registrujete 
+</a>
+za pun uzitak! :)</h3>
+
+<app-pretraga-knjiga></app-pretraga-knjiga>
+
+
+<hr/>
+
+<h2 style="color: darkblue;"> Spisak aktivnih i buducih desavanja</h2>
+
+<table>
+    <tr>
+        <th>
+            Naziv
+        </th>
+        <th>
+            Status
+        </th>
+    </tr>
+    <tr *ngFor='let d of desss'>
+        <td>
+            {{d.naziv}}
+        </td>
+        <td>
+            <div *ngIf='d.st==true'>
+                Aktivno
+            </div>
+            <div *ngIf='d.st==false'>
+                Pocinje {{d.pocetak}}
+            </div>
+        </td>
+    </tr>
+</table>

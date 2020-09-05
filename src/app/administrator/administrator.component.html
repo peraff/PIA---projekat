@@ -1,0 +1,151 @@
+<h2 style="color: darkblue;">
+    Zahtevi za registraciju
+</h2>
+
+<div *ngIf='korisnici.length>0'>
+
+<table>
+    <tr>
+    <th>
+      Korisnicko ime
+    </th>
+    <th>
+        E-mail
+    </th>
+    <th>
+        Drzava
+    </th>
+    <th>
+        Ime
+    </th>
+    <th>
+        Prezime
+    </th>
+    <th>
+        Prihvati zahtev
+    </th>
+    </tr>
+
+    <tr *ngFor='let k of korisnici'>
+        <td>
+            {{k.korIme}}
+        </td>
+        <td>
+            {{k.mejl}}
+        </td>
+        <td>
+            {{k.drzava}}
+        </td>
+        <td>
+            {{k.ime}}
+        </td>
+        <td>
+            {{k.prezime}}
+        </td>
+        <td>
+            <button type="button" (click)="prihvatiZahtev(k)"> Prihvati!</button>
+            <button type="button" (click)="odbij(k)">Odbaci!</button>
+        </td>
+    </tr>
+</table>
+    
+</div>
+
+<div *ngIf='korisnici.length==0'>
+    Trenutno nema novih zahteva za registraciju!
+</div>
+
+<hr/>
+
+<h2 style="color: darkblue;">
+    Svi korisnici u sistemu
+</h2>
+
+<div *ngIf='sviKorisnici.length>0'>
+
+<table>
+    <tr>
+    <th>
+      Korisnicko ime
+    </th>
+    <th>
+        E-mail
+    </th>
+    <th>
+        Drzava
+    </th>
+    <th>
+        Ime
+    </th>
+    <th>
+        Prezime
+    </th>
+    <th>
+        Akcija
+    </th>
+    </tr>
+
+    <tr *ngFor='let k of sviKorisnici'>
+        <td>
+            {{k.korIme}}
+        </td>
+        <td>
+            {{k.mejl}}
+        </td>
+        <td>
+            {{k.drzava}}
+        </td>
+        <td>
+            {{k.ime}}
+        </td>
+        <td>
+            {{k.prezime}}
+        </td>
+        <td>
+            <div *ngIf='k.tip=="registrovani"'>
+                <button (click)="unapredi(k)"> Unapredi u moderatora</button>
+            </div>
+            <div *ngIf='k.tip=="moderator"'>
+                <button (click)="unazadi(k)"> Vrati na obicnog korisnika</button>
+            </div>
+            
+        </td>
+    </tr>
+</table>
+    
+</div>
+
+<div *ngIf='sviKorisnici.length==0'>
+    Trenutno nema novih zahteva za registraciju!
+</div>
+
+<hr/>
+
+<h2 style="color: darkblue;"> Dodaj/ukloni zanr </h2>
+<div>
+    <table>
+        <tr>
+            <th>
+                Zanr
+            </th>
+            <th>
+                Ukloni
+            </th>
+        </tr>
+        <tr *ngFor='let z of zanrovi'>
+            <td>
+                {{z}}
+            </td>
+            <td>
+                <button class="ukloniZ" (click)='ukloniZanr(z)'> X </button>
+            </td>
+        </tr>
+    </table>
+    
+</div>
+<br/>
+<div>
+    Dodaj zanr: 
+    <input type="text" name="zz" [(ngModel)]="noviZanr">
+    <button (click)="dodajZanr()">Dodaj!</button>
+</div>

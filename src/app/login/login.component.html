@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h2>Dobrodosli na veb aplikaciju za ljubitelje knjiga!</h2>
+  <hr/>
+  <h3>Ulogujte se</h3>
+  <span class="poruka">
+    {{poruka}}
+  </span>
+  <form>
+  Korisnicko ime:
+  <input type="text" name="korIme" [(ngModel)]="korIme">
+  <br>
+  Lozinka:
+  <input type="password" name="lozinka" [(ngModel)]="lozinka">
+  <br/>
+  <a routerLink="/resetujLozinku" (click)="zab()">Zaboravljena lozinka</a>
+  <br/>
+  <button type="submit" (click)="login()"> Uloguj se</button>
+  </form>
+  <hr/>
+  <h3>
+    Nemas nalog?
+  </h3>
+  <a routerLink = "/registracija">Registruj se</a> | 
+  <a routerLink = "/gost" (click)="gost()"> Nastavi kao gost </a>
+</body>
+</html>

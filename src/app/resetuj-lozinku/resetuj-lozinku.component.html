@@ -1,0 +1,29 @@
+<!-- NA OVU KOMPONENTU IDU I KORISNIK KADA ZELI NOVU LOZINKU I KADA JE ZABORAVIO LOZINKU! -->
+
+<h2>Resetovanje lozinke</h2>
+<hr/>
+
+<div *ngIf='zab=="da"'>
+    <h2>Unesite vasu e-mail adresu</h2>
+
+    <input type="email" [(ngModel)]="mejl" name="mejlic"/>
+    {{poruka}}
+    <br/>
+    <input type="button" name="potvrdi" (click)="saljii()" value="Resetuj!">
+</div>
+
+<div *ngIf='zab =="ne"'>
+    Stara lozinka:
+    <input type="password" name="stara" [(ngModel)]="stara">
+    <br/>
+    Nova lozinka:
+    <input type="password" name="nova1" [(ngModel)]="nova1">
+    <br/>
+    Potvrda lozinke:
+    <input type="password" name="nova2" [(ngModel)]="nova2">
+    <br/>
+    <input type="button" name="potvrda" (click)="saljii2()" value="Promeni!">
+
+    {{poruka}}
+</div>
+

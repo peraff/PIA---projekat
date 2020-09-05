@@ -1,0 +1,54 @@
+.slicc{
+    border-radius: 5px;
+    width: 199px;
+    border: 1px solid #ddd;
+    padding: 3px;
+    border-color: #2f00ff;
+}
+
+.aktivan{
+  height: 15px;
+  width: 15px;
+  background-color: rgb(38, 236, 20);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.ak{
+    color: rgb(38, 236, 20);
+    font-weight: bold;
+}
+
+.dug{
+  font-weight: bold;
+  color: darkblue;
+  border-radius: 5px;
+}
+
+.dug:hover{
+  color: rgb(230, 53, 53);
+  cursor: pointer;
+}
+
+.neodobrena{
+  color: gray;
+  pointer-events: none;
+}
+
+.neodobrenLink{
+  color:gray;
+  text-decoration:none;
+}
+
+.unutra{
+  position: absolute;
+  top: 0px;
+  right: 10px;
+}
+.okolo{
+  position: relative;
+}
+.centriraj{
+  margin: auto;
+  width: 30%;
+}

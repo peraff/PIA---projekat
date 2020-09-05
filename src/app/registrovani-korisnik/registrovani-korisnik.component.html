@@ -1,0 +1,378 @@
+<div *ngIf='(moj != "") && (izmena==false)' class="okolo" >
+    <h3> Dobrodosao, <span style="color:darkblue"> {{moj}}!</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    
+    <div class="centriraj">
+        <span class="dug" (click)="dodajKnjigu()"> Dodavanje knjige |</span>
+        <span class="dug" (click)="promeniLozinku()"> Promena lozinke |</span>
+        <span class="dug" (click)="odjavi()"> Odjavi me</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    </div>
+    
+        <div class="unutra">
+            <span class="aktivan"></span>
+            <span class="ak">
+                trenutno aktivan
+             </span>
+        </div>
+    </h3>
+   
+
+    <!-- ********************SAMO ADMIN VIDI OVE STVARI***********************-->
+    <div *ngIf='korisnik.tip=="admin"'>
+        <app-administrator></app-administrator>
+    </div>
+    
+    
+    <!-- ************ samo moderator vidi deo za odobravanje knjiga ************-->
+<div *ngIf='!noveKnjige.length && korisnik.tip=="moderator"'>
+    <hr/>
+    <h2 style="color: darkblue;">Nema zahteva za dodavanje novih knjiga!</h2>
+</div>
+
+    <div *ngIf='korisnik.tip=="moderator" && noveKnjige.length'>
+        <hr/>
+        <h2 style="color: darkblue;">Zahtevi za odobravanje unosa knjige u sistem</h2>
+        <table>
+            <tr>
+            <th>
+                Naziv
+            </th>
+            <th>
+                Autori 
+            </th>
+            <th>
+                Opis
+            </th>
+            <th>
+                Datum
+            </th>
+            <th>
+               Zanr
+            </th>
+            <th>
+                Akcija
+            </th>
+            </tr>
+        
+            <tr *ngFor='let k of noveKnjige'>
+                <td>
+                    {{k.nazivK}}
+                </td>
+                <td>
+                    {{k.autoriK}}
+                </td>
+                <td>
+                    {{k.opisK}}
+                </td>
+                <td>
+                    {{k.datumK}}
+                </td>
+                <td>
+                    {{k.zanroviK}}
+                </td>
+                <td>
+                    <button type="button" (click)="prihvatiKnjigu(k)"> Prihvati!</button>
+                    <button type="button" (click)="odbijKnjigu(k)">Odbaci!</button>
+                </td>
+            </tr>
+        </table>
+    
+    </div>
+
+    <!-- **************************************** DODAVANJE NOVE KNJIGE, SAKRIVENO DOK SE NE KLIKNE ***************************************-->
+    <div *ngIf='dodavanjeKnjige' #dodo>
+        <hr/>
+        <h2 style="color: darkblue;">Dodajte novu knjigu</h2>
+        <form>
+            <table>
+                <tr>
+                    <td>
+                        Naziv knjige: 
+                    </td>
+                    <td>
+                        <input type="text" name="naziv" [(ngModel)]="nazivK">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Autori:
+                    </td>
+                    <td>
+                        <textarea name="autori" [(ngModel)]="autoriK"></textarea> <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Zanr:
+                    </td>
+                    <td>
+                        <select multiple [(ngModel)]="izabraniZanrovi" name="selektic">
+                            <option *ngFor='let z of zanrovi'> 
+                                {{z}}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Datum izdavanja
+                    </td>
+                    <td>
+                       <input type="date" name="datum" [(ngModel)]="datumK">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                       Opis
+                    </td>
+                    <td>
+                        <textarea name="kratakOpis" [(ngModel)]="opisK"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Slika naslovnice:
+                    </td>
+                    <td>
+                        <input type="file" (change)="dodajSlikuKnjige($event)">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button (click)="posaljiKnjigu()" name="slanje">Dodaj!</button>
+                    </td>
+                </tr>
+            </table>
+             
+        </form>
+    </div>
+    <hr/>
+
+    <h2 style="color:darkblue">Profil</h2>
+    <div style="font-style:italic"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Slika profila</div>
+    <img class="slicc" [src]="slika">
+    <br/>
+    Ime: {{korisnik.ime}}
+    <br/>
+    Prezime: {{korisnik.prezime}}
+    <br/>
+    Datum rodjenja: {{korisnik.datum}}
+    <br/>
+    Grad i drzava: {{korisnik.grad}} - {{korisnik.drzava}}
+    <br/>
+    E-mail: {{korisnik.mejl}}
+    <br/>
+    Tip: {{korisnik.tip}} korisnik
+    <br/>
+    <input type="button" name="dugg" value="Izmeni podatke" (click)="iz()">
+</div> <!-- ovde tek je zatvoren skroz gornji div! -->
+
+<!-- AKO SE KLIKNE DUGME ZA IZMENU PODATAKA -->
+
+<div *ngIf='izmena==true && moj!=""'>
+    <h3> Dobrodosao, <span style="color:darkblue"> {{moj}}!</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+        <span class="dug" (click)="promeniLozinku()"> Promena lozinke</span>
+        <span class="dug" (click)="odjavi()"> Odjavi me</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        <span class="aktivan"></span>
+         <span class="ak">
+            trenutno aktivan
+         </span>
+        </h3>
+        <hr/>
+        <h2 style="color:darkblue">Profil</h2>
+        
+        <div style="font-style:italic"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Slika profila</div>
+    <img class="slicc" [src]="slika">
+    <br/>
+    <form>
+        Ime:  
+        <input type="text" name="ime" [(ngModel)]='korisnik.ime' >
+        <br/>
+        Prezime:  
+        <input type="text" name="prezime" [(ngModel)]='korisnik.prezime' >
+
+        <br/>
+        Datum rodjenja:
+        <input type="date" name="datum" [(ngModel)]='korisnik.datum'>
+        <br/>
+        Drzava:
+        <input type="string" name="drzava" [(ngModel)]='korisnik.drzava'>
+        <br/>
+        Grad:
+        <input type="string" name="grad" [(ngModel)]='korisnik.grad'>
+        <br/>
+        E-mail:
+        <input type="email" name='mejl' [(ngModel)]='korisnik.mejl'>
+        <br/>
+        Slika profila:
+       <input type="file" (change)='dodajSliku($event)'>
+       <br/>
+        
+     <input type="button" name="dug" value="Izmeni podatke!" (click)='izmeniPod()'>
+    </form>
+</div>
+ 
+<!-- **************************************************PREGLEDI KNJIGA *********************************************-->
+<hr/>
+<h2 style="color: darkblue;"> Procitane knjige </h2>
+
+<div *ngIf='procitaneKnjige.length>0'>
+    <div style="display: block; width:30%;">
+        <canvas baseChart
+                [data]="pieChartData"
+                [labels]="pieChartLabels"
+                [colors]="mojeBoje"
+                chartType='pie'></canvas>
+      </div>
+    
+    
+    <div *ngFor='let k of procitaneKnjige'>
+        <a style="font-size: 16px;" routerLink='/knjiga/{{k.nazivK}}'>{{k.nazivK}} |  </a>
+    </div>
+</div>
+
+<div *ngIf='procitaneKnjige.length ==0'>
+    Niste procitali ni jednu knjigu jos uvek!
+</div>
+
+<hr/>
+
+<h2 style="color: darkblue;">Trenutno cita:</h2>
+
+<div *ngIf='trenutnoCita.length>0'>
+    <div *ngFor='let k of trenutnoCita'>
+        <a style="font-size: 16px;" routerLink='/knjiga/{{k.nazivK}}' (click)="podesiCitanje()">{{k.nazivK}} |  </a>
+    </div>
+</div>
+
+<div *ngIf='trenutnoCita.length==0'>
+    Trenutno ne citate ni jednu knjigu!
+</div>
+
+
+<!-- ***************************************************** PREGLED KOMENTARA */*/*/*/**/*/*/**/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/-->
+<hr/>
+<h2 style="color: darkblue;">Moji komentari</h2>
+<div *ngIf='mojiKomentari.length>0'>
+    <table>
+        <tr>
+            <th>
+                Knjiga
+            </th>
+            <th>
+                Autori
+            </th>
+            <th>
+                Ocena
+            </th>
+            <th>
+                Komentar
+            </th>
+        </tr>
+        <tr *ngFor='let k of mojiKomentari'>
+            <td>
+                <a style="font-size: 16px;" routerLink='/knjiga/{{k.nazivK}}'> {{k.nazivK}}</a>
+            </td>
+            <td>
+                {{k.autoriK}}
+            </td>
+            <td>
+                {{k.ocena}}
+            </td>
+            <td>
+                {{k.komentar}}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div *ngIf='mojiKomentari.length==0'> Niste ostavili ni jedan komentar! Malo se aktivirajte!</div>
+
+
+<!-- **************************************** LISTA DESAVANJA ***********************************************-->
+
+<hr/>
+
+<h2 style="color: darkblue;"> Spisak aktivnih i buducih desavanja</h2>
+
+<table>
+    <tr>
+        <th>
+            Naziv
+        </th>
+        <th>
+            Status
+        </th>
+    </tr>
+    <tr *ngFor='let d of desss'>
+        <td>
+            {{d.naziv}}
+        </td>
+        <td>
+            <div *ngIf='d.st==true'>
+                Aktivno
+            </div>
+            <div *ngIf='d.st==false'>
+                Pocinje {{d.pocetak}}
+            </div>
+        </td>
+    </tr>
+</table>
+
+<!-- ***************************************************************************************************************
+        PRETRAGA KNJGA **********************************************************************************************-->
+        <hr/>
+        <h2 style="color: darkblue;">Pretraga knjiga:</h2>
+Naziv: 
+<input type="text" name="nazivv" [(ngModel)]="naziv">
+<br/>
+Autori:
+<input type="text" name="autori" [(ngModel)]="autori">
+<br/>
+Zanr:
+<br/>
+<select multiple [(ngModel)]="zanr" name="zanrovi">
+    <option *ngFor="let z of zanrovi"> {{z}}</option>
+</select>
+<br/>
+<button (click)='pretraga()'>Pretrazi!</button>
+
+ <div *ngIf='knjige.length>0'>
+    <h2 style="color: darkblue;">Rezultati pretrage:</h2>
+    <table>
+        <tr>
+        <th>
+            Naziv
+        </th>
+        <th>
+            Autori 
+        </th>
+        <th>
+           Zanr
+        </th>
+        </tr>
+    
+        <tr *ngFor='let k of knjige' [class.neodobrena]='!k.odobrena'>
+            <td>
+                <a routerLink='/knjiga/{{k.nazivK}}' [class.neodobrenLink]='!k.odobrena'>
+                    {{k.nazivK}}
+                </a>
+            </td>
+            <td>
+                {{k.autoriK}}
+            </td>
+            <td>
+                {{k.zanroviK}}
+            </td>
+        </tr>
+    </table>
+
+ </div>
+
+ <div *ngIf='knjige.length==0 && pretrazeno'>
+    Trazena knjiga ne postoji u sistemu!
+    <div *ngIf='moj!="gost"'>
+        Dodajte novu knjigu!
+        <br/>
+        <button name="doadavanje" (click)="dodajKnjigu2();">Dodaj!</button>       
+    </div>
+</div>

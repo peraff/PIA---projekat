@@ -1,0 +1,199 @@
+<div *ngIf='mojaKnjiga && izmene==false'>
+<table>
+    <tr>
+        <td colspan="2">
+            <img [src]="mojaKnjiga.slikaK">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Naziv:
+        </td>
+        <td>
+            {{mojaKnjiga.nazivK}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Autori:
+        </td>
+        <td>
+            {{mojaKnjiga.autoriK}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Opis:
+        </td>
+        <td>
+            {{mojaKnjiga.opisK}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Datum izdavanja:
+        </td>
+        <td>
+            {{mojaKnjiga.datumK}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Zanr:
+        </td>
+        <td>
+            {{zanrovi}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Ocena:
+        </td>
+        <td>
+            <div *ngIf='prosecnaOcena!=0'>
+                {{prosecnaOcena}}
+            </div>
+            <div *ngIf='prosecnaOcena==0'>
+                /
+            </div>
+            
+        </td>
+    </tr>
+</table>
+</div>
+
+
+<!-- ****************************** ADMIN KLIKNUO IZMENA KNJIGE, OTVARAJU SE POLJA ZA IZMENU, SAKRIVA SE GORNJI DEO***************-->
+
+<div *ngIf='mojaKnjiga && izmene==true'>
+    <table>
+        <tr>
+            <td colspan="2">
+                <img [src]="mojaKnjiga.slikaK">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Autori:
+            </td>
+            <td>
+                <input type="text" name="auttt" [(ngModel)]="mojaKnjiga.autoriK">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Opis:
+            </td>
+            <td>
+                <input type="text" name="oppp" [(ngModel)]="mojaKnjiga.opisK">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Datum izdavanja:
+            </td>
+            <td>
+                <input type="text" name="dattt" [(ngModel)]="mojaKnjiga.datumK">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Zanr:
+            </td>
+            <td>
+                <input type="text" name="zannn" [(ngModel)]="zanrovi">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button (click)="azurirajPodatkeKnjige()"> Azuriraj! </button>
+            </td>
+        </tr>
+    </table>
+    </div>
+
+<!-- ************************************************ prikaz komentara ************************************************-->
+<hr/>
+<h2 style="color: darkblue;">Komentari</h2>
+<div *ngIf='komentari.length>0'>
+    <table>
+        <tr>
+            <th>
+                Korisnik
+            </th>
+            <th>
+                Ocena
+            </th>
+            <th>
+                Komentar
+            </th>
+        </tr>
+        <tr *ngFor='let k of komentari'>
+            <td>
+                <div *ngIf='moj!="gost"'>
+                    <a routerLink="/profilPrikaz" (click)="tudjiProfil(k.korisnik)">
+                        {{k.korisnik}}
+                    </a>
+                </div>
+               <div *ngIf='moj=="gost"'>
+                    Anonimna
+               </div>
+            </td>
+            <td>
+                {{k.ocena}}
+            </td>
+            <td>
+                {{k.komentar}}
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<div *ngIf='komentari.length==0'>Nisu dostupni komentari za ovu knjigu!</div>
+<br/>
+
+
+
+<div *ngIf='moj!="gost"'>
+    <button class="lep" name="procitana" (click)="procitana()">Procitana!</button> &nbsp; &nbsp; &nbsp; 
+    <button class="lep" name="zapocniCitanje" (click)="zapocniCitanje()"> Zapocni citanje</button> &nbsp; &nbsp; &nbsp; 
+    <button class="lep" name="staviNaListu" (click)="staviNaListu()">Stavi na listu</button> &nbsp; &nbsp; &nbsp; 
+    <button *ngIf='moj=="admin"' class="lep" name="izmeniKnjigu" (click)="izmeniKnjigu()">Izmeni podatke</button> &nbsp; &nbsp; &nbsp; 
+    <button class="lep" name="ukloniSaListe" (click)="ukloniSaListe()">Ukloni sa liste</button> 
+
+    <hr/>
+
+<div *ngIf='zapoceo=="da"'>
+    <h2 style="color: darkblue; text-align: center;">Trenutno citate ovu knjigu!</h2>
+    <mat-progress-bar class="pb" mode="determinate" [value]="postignuce"></mat-progress-bar>
+    <div style="text-align: center;">
+        {{postignuce}}%
+    </div>
+    <br/>
+    Unesite stranu do koje ste stigli sa citanjem:
+    <input type="text" name="procitao" [(ngModel)]="procitao" (change)="azurirajPB()">
+    <br/>
+    Unesite koliko knjiga ima strana:
+    <input type="text" name="ukupno" [(ngModel)]="ukupno" (change)="azurirajPB()">
+
+</div>
+
+<!--KOMENTARI NA KNJIGU-->
+
+<div *ngIf='postignuce >= 50'>
+    <hr/>
+    <h2 style="color: darkblue;">Cestitamo na procitanih 50% knjige! Sada mozete ostaviti Vas komentar</h2>
+    Komentar:
+    <br/>
+    <textarea  rows="4" name="kom" [(ngModel)]="komentar" maxlength="1000" placeholder="Ovde unesite Vas komentar!"></textarea>
+    <br/>
+    Ocena:
+    <br/>
+    <input type="number" name="ocenica" [(ngModel)]="ocenica" max="10" min="1">
+    <br/>
+    <button (click)="unesiKomentar()">Postavi komentar!</button>
+    </div>
+
+</div>
+
